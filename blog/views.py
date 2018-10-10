@@ -77,7 +77,7 @@ class post_registro(View):
     #muestro el form
     def get(self,request):
         form = self.form_class(None)
-        return render(request, 'blog/post_registro.html', {'form': form})
+        return render(request, 'blog/post_registro.html')
     #lo controlo
     def post(self,request):
         form = self.form_class(request.POST)
@@ -99,22 +99,24 @@ class post_registro(View):
                     
                         N = 20
                         token = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(N))           
-                        usuario = Usuario(usuario = user, tokenActivacion = token,)
+                        usr_confirmacion = Usuario(usuario = user, tokenActivacion = token,)
 
                         email_subject   = 'Comunidad Bateros'
-                        email_body      = "Hola %s!, Gracias por registrarte. Para activar tu cuenta haga clíck en el siguiente link: https://comunidadbateristas.herokuapp.com/post/portada/%s" % (nombre, token)
+                        email_body      = "Hola %s!, Gracias por registrarte. Para activar tu cuenta haga clíck en el siguiente link: https://comunidadbateros.herokuapp.com/post/portada/%s" % (nombre, token)
                         send_mail(email_subject,email_body, 'comunidadbateros@gmail.com',[email] )
 
                         user.save()
-                        usuario.save()
+                        usr_confirmacion.save()
 
-                        return HttpResponseRedirect("/post/validation/")   
+                        return redirect('post_validation')  
                     else:
                         messages.success(request, "Las contraseñas ingresadas no son iguales")
                 else:
                     messages.success(request, "El correo ingresado ya esta asociado a una cuenta")
             else:
                 messages.success(request, "El Usuario ingresado ya se encuentra registrado.")
+        else:
+            messages.success(request, "Ingrese Datos.")
         return render(request, 'blog/post_registro.html')
 
 def post_portada(request):
