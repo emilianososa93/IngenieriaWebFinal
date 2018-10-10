@@ -102,7 +102,7 @@ class post_registro(View):
                         usuario = Usuario(usuario = user, tokenActivacion = token,)
 
                         email_subject   = 'Comunidad Bateros'
-                        email_body      = "Hola %s!, Gracias por registrarte. Para activar tu cuenta haga clíck en el siguiente link: https://comunidadbateros.herokuapp.com/post/portada/%s" % (nombre, token)
+                        email_body      = "Hola %s!, Gracias por registrarte. Para activar tu cuenta haga clíck en el siguiente link: https://comunidadbateristas.herokuapp.com/post/portada/%s" % (nombre, token)
                         send_mail(email_subject,email_body, 'comunidadbateros@gmail.com',[email] )
 
                         user.save()
