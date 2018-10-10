@@ -1,0 +1,26 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+    <div  class="post">
+        {% if post.published_date %}
+            <div style="margin-left: 870px" class="date">
+                {{ post.published_date }}
+            </div>
+        {% endif %}
+        <ul>
+            <div style="margin-left: 940px" class="form-group" >
+                <a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
+            </div>
+            <div class="col-md-10 col-md-offset-1" style="margin-left: 20px">
+            <p >{{ post.text|linebreaksbr }}</p>
+        </div>
+        </ul>        
+        <div class="col-md-10 col-md-offset-1" style="margin-left: -150px">
+            <form method="get" action="/post/">
+            <div class="post"  style="margin-top: 70px">
+                <div class="col-md-3 col-md-offset-1" style="margin-left: 20px">
+                    <button class="btn btn-primary btn-block" name="nuevapubliacion" >Volver</button>
+                </div>
+            </div>
+        </form>
+{% endblock %}

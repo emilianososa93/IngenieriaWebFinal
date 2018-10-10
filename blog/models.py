@@ -2,9 +2,10 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 from django.contrib.auth.models import User
+import os
 
 class Post(models.Model):
-    idpublicion = models.ForeignKey(User,on_delete = models.CASCADE, null=True,blank=True)
+    idpublicion = models.ForeignKey(User,on_delete = models.CASCADE, null=True,blank=True, default='')
     idseccion = models.TextField()
     title = models.CharField(max_length=200)
     text = models.TextField()
@@ -19,53 +20,50 @@ class Post(models.Model):
         return self.title
 
 
-class Perfil(models.Model):
-    usuario = models.OneToOneField(User,on_delete = models.CASCADE, null=True,blank=True)
-    activacion_token= models.CharField(max_length = 40)
-    descripcion = models.TextField()
-
+class Usuario(models.Model):
+    nombre = models.CharField(max_length=50, null=False, blank=False, default='')
+    apellido = models.CharField(max_length=50, null=False, blank=False, default='')
+    email = models.EmailField()
+    usuario = models.OneToOneField(User,on_delete = models.CASCADE, null=True, blank=True)
+    fechanacimiento = models.DateField(null=True, blank=True)
+    tokenActivacion = models.CharField(max_length = 40, blank = True, null = True)
 
     def __str__(self):
         return self.usuario.username
 
 class Secciones(models.Model):
-    idseccion = models.AutoField(primary_key = True)
-    descripcion = models.TextField()   
+    idseccion = models.AutoField(primary_key = True, null=False, blank=True)
+    descripcion = models.TextField(max_length=50)   
     def __str__(self):
-        return self.idseccion   
+        return self.idseccion 
 
 
 
-class Comentario(models.Model):
-    idcomentario = models.AutoField(primary_key = True)
-    idusuario = models.ForeignKey(User,on_delete = models.CASCADE, null=True,blank=True)
-    idpublicion = models.ForeignKey(Post,on_delete = models.CASCADE, null=True,blank=True)
-    texto = models.TextField()
-    fechacomentario = models.DateField()
-    fechabaja =models.DateField()
+class Comentario(models.Model):    
+    idpublicion = models.ForeignKey(Post,on_delete = models.CASCADE, null=True, blank=True)
+    comentario = models.TextField(null=True,blank=False)
+    idusuario = models.ForeignKey(User,on_delete = models.CASCADE,null=True,blank=True)  
+    fechaBaja = models.DateTimeField(auto_now=False, null=True,blank=True,default=None)
+    fechaAlta = models.DateTimeField(auto_now=False, null=True,blank=True, default=None)
 
     def __str__(self):
-        return self.texto
+        return self.comentario
 
 class MotivoDenuncia(models.Model):
-    motivo = models.TextField()
+    motivo = models.TextField(null=True,blank=False)
 
     def __str__(self):
         return self.motivo
 
 
-class Denuncia(models.Model):
-    idusuario = models.ForeignKey(User,on_delete = models.CASCADE, null=True,blank=True)  
-    idcomentario = models.ForeignKey(Comentario,on_delete = models.CASCADE, null=True,blank=True)
-    fechaDenuncia = models.DateTimeField()
-    motivo = models.ForeignKey(MotivoDenuncia,on_delete = models.CASCADE, null=True,blank=True)
-    idpublicion = models.ForeignKey(Post,on_delete = models.CASCADE, null=True,blank=True)
+class Denuncias(models.Model):
+    idusuario = models.ForeignKey(User,on_delete = models.CASCADE,null=True,blank=True)  
+    idcomentario = models.ForeignKey(Comentario,on_delete = models.CASCADE, null=True, blank=True)
+    fechadenuncia = models.DateTimeField(auto_now=False, null=True, blank=True, default=None)
+    idmotivo = models.ForeignKey(MotivoDenuncia, on_delete = models.CASCADE,null=True, blank=False)
+    idpublicion = models.ForeignKey(Post,on_delete = models.CASCADE, null=True, blank=True)
 
     def __str__(self):
-        return str(self.id)
+        return str(self.idusuario)
 
 
-class Perfiles(models.Model):
-    idpermiso = models.AutoField(primary_key = True)
-    idusuario = models.ForeignKey(User,on_delete = models.CASCADE, null=True,blank=True)
-    descripcion = models.TextField()
