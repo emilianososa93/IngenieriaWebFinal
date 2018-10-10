@@ -13,4 +13,5 @@ urlpatterns = [
         url(r'^post/registro/$', views.post_registro.as_view(), name ='post_registro'),
         url(r'^post/secciones/$', views.post_secciones, name ='post_secciones'),
         url(r'^post/validation/$', views.post_validation, name = 'post_validation'),
+        url(r'^post/bienvenida/(?P<tokenActivacion>\w+)/', views.post_confirmar, name = 'post_bienvenida'),
 ]

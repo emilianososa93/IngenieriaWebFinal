@@ -102,7 +102,7 @@ class post_registro(View):
                         usr_confirmacion = Usuario(usuario = user, tokenActivacion = token,)
 
                         email_subject   = 'Comunidad Bateros'
-                        email_body      = "Hola %s!, Gracias por registrarte. Para activar tu cuenta haga clíck en el siguiente link: https://comunidadbateros.herokuapp.com/post/portada/%s" % (nombre, token)
+                        email_body = "Hola %s!, Gracias por registrarte. Para activar tu cuenta haga clíck en el siguiente link: https://comunidadbateros.herokuapp.com/post/bienvenida/%s" % (email, token)
                         send_mail(email_subject,email_body, 'comunidadbateros@gmail.com',[email] )
 
                         user.save()
@@ -115,9 +115,7 @@ class post_registro(View):
                     messages.success(request, "El correo ingresado ya esta asociado a una cuenta")
             else:
                 messages.success(request, "El Usuario ingresado ya se encuentra registrado.")
-        else:
-            messages.success(request, "Ingrese Datos.")
-        return render(request, 'blog/post_registro.html')
+        return render(request, 'blog/post_registro.html', {'form': form})
 
 def post_portada(request):
     if request.method == "POST":
@@ -140,7 +138,8 @@ def post_confirmar(request, tokenActivacion):
     user = usuario.usuario
     user.is_active  = True
     user.save()
-    return render(request, 'blog/post_portada.html')
+    return render(request, 'blog/post_bienvenida.html',context={'nombre_usuario': user.first_name},
+)
 
 
 def post_validation(request):
