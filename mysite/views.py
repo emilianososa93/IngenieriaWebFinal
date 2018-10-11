@@ -50,5 +50,4 @@ def post_confirmar(request, tokenActivacion):
     user = usuario.usuario
     user.is_active  = True
     user.save()
-    return render(request, 'blog/post_bienvenida.html',context={'nombre_usuario': user.first_name},
-)
+    return render(request, 'blog/post_bienvenida.html',context={'nombre_usuario': user.first_name})
