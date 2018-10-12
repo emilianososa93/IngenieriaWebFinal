@@ -40,7 +40,7 @@ class Secciones(models.Model):
 
 
 class Comentario(models.Model): 
-    id = models.BigIntegerField(primary_key = True)   
+    id_comentario= models.AutoField(primary_key = True)   
     idpublicion = models.ForeignKey(Post,on_delete = models.CASCADE, null=True, blank=True)
     comentario = models.TextField(null=True,blank=False)
     idusuario = models.ForeignKey(User,on_delete = models.CASCADE,null=True,blank=True)  
