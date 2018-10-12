@@ -99,14 +99,14 @@ class post_registro(View):
                     
                         N = 20
                         token = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(N))           
-                        usr_confirmacion = Usuario(usuario = user, tokenActivacion = token,)
+                        usuario = Usuario(usuario = user, tokenActivacion = token,)
 
                         email_subject   = 'Comunidad Bateros'
                         email_body = "Hola %s!, Gracias por registrarte. Para activar tu cuenta haga clíck en el siguiente link: https://comunidadbateristas.herokuapp.com/post/bienvenida/%s" % (nombre, token)
                         send_mail(email_subject,email_body, 'comunidadbateros@gmail.com',[email] )
 
                         user.save()
-                        usr_confirmacion.save()
+                        usuario.save()
 
                         return redirect('post_validation')  
                     else:
