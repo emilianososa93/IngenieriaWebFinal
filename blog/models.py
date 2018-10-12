@@ -25,7 +25,6 @@ class Usuario(models.Model):
     apellido = models.CharField(max_length=50, null=False, blank=False, default='')
     email = models.EmailField(max_length=50)
     usuario = models.OneToOneField(User,on_delete = models.CASCADE, null=True, blank=True)
-    fechanacimiento = models.DateField(null=True, blank=True)
     tokenActivacion = models.CharField(max_length = 40, blank = True, null = True)
 
     def __str__(self):
