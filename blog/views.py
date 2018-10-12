@@ -134,7 +134,7 @@ def logout(request):
 
 
 def post_confirmar(request, tokenActivacion):
-    usuario  = get_object_or_404(usuario, tokenActivacion = tokenActivacion )    
+    usuario  = get_object_or_404(Usuario, tokenActivacion = tokenActivacion )    
     user = usuario.usuario
     user.is_active  = True
     user.save()

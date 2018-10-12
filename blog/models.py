@@ -39,9 +39,9 @@ class Secciones(models.Model):
 
 
 
-class Comentario(models.Model):  
+class Comentario(models.Model):   
     idpublicion = models.ForeignKey(Post,on_delete = models.CASCADE, null=True, blank=True)
-    cuerpocomentario = models.TextField(null=False, blank=True)
+    cuerpocomentario = models.TextField(max_length=5000, null=False, blank=True)
     idusuario = models.ForeignKey(User,on_delete = models.CASCADE,null=True,blank=True)  
     fechaBaja = models.DateTimeField(auto_now=False, null=True,blank=True,default=None)
     fechaAlta = models.DateTimeField(auto_now=False, null=True,blank=True, default=None)
