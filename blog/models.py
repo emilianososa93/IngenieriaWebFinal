@@ -39,15 +39,15 @@ class Secciones(models.Model):
 
 
 
-class Comentarios(models.Model): 
-    idpublicion = models.ForeignKey(Post, null=True, blank=True)
-    comentario = models.TextField(null=True,blank=False)
-    idUsuario = models.ForeignKey(User,null=True,blank=True)  
+class Comentario(models.Model):  
+    idpublicion = models.ForeignKey(Post,on_delete = models.CASCADE, null=True, blank=True)
+    cuerpocomentario = models.TextField(null=False, blank=True)
+    idusuario = models.ForeignKey(User,on_delete = models.CASCADE,null=True,blank=True)  
     fechaBaja = models.DateTimeField(auto_now=False, null=True,blank=True,default=None)
-    fechaAlta  = models.DateTimeField(auto_now=False, null=True,blank=True, default=None)
+    fechaAlta = models.DateTimeField(auto_now=False, null=True,blank=True, default=None)
 
     def __str__(self):
-        return self.comentario
+        return self.cuerpocomentario
 
 class MotivoDenuncia(models.Model):
     motivo = models.TextField(null=True,blank=False)
@@ -58,7 +58,7 @@ class MotivoDenuncia(models.Model):
 
 class Denuncias(models.Model):
     idusuario = models.ForeignKey(User,on_delete = models.CASCADE,null=True,blank=True)  
-    idcomentario = models.ForeignKey(Comentarios,on_delete = models.CASCADE, null=True, blank=True)
+    idcomentario = models.ForeignKey(Comentario,on_delete = models.CASCADE, null=True, blank=True)
     fechadenuncia = models.DateTimeField(auto_now=False, null=True, blank=True, default=None)
     idmotivo = models.ForeignKey(MotivoDenuncia, on_delete = models.CASCADE,null=True, blank=False)
     idpublicion = models.ForeignKey(Post,on_delete = models.CASCADE, null=True, blank=True)
