@@ -102,7 +102,7 @@ class post_registro(View):
                         usr_confirmacion = Usuario(usuario = user, tokenActivacion = token,)
 
                         email_subject   = 'Comunidad Bateros'
-                        email_body = "Hola %s!, Gracias por registrarte. Para activar tu cuenta haga clíck en el siguiente link: https://comunidadbateros.herokuapp.com/post/bienvenida/%s" % (email, token)
+                        email_body = "Hola %s!, Gracias por registrarte. Para activar tu cuenta haga clíck en el siguiente link: https://comunidadbateristas.herokuapp.com/post/bienvenida/%s" % (email, token)
                         send_mail(email_subject,email_body, 'comunidadbateros@gmail.com',[email] )
 
                         user.save()
@@ -134,7 +134,7 @@ def logout(request):
 
 
 def post_confirmar(request, tokenActivacion):
-    usuario  = get_object_or_404(Usuario, tokenActivacion = tokenActivacion )    
+    usuario  = get_object_or_404(usuario, tokenActivacion = tokenActivacion )    
     user = usuario.usuario
     user.is_active  = True
     user.save()
