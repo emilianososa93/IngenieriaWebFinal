@@ -42,13 +42,13 @@ class Secciones(models.Model):
 class Comentario(models.Model): 
     idcomentario= models.AutoField(primary_key = True, null=False, blank=True)   
     idpublicion = models.ForeignKey(Post,on_delete = models.CASCADE, null=True, blank=True)
-    comentario = models.TextField(max_length=5000)
+    cuerpocomentario = models.TextField(max_length=5000, null=False, blank=True)
     idusuario = models.ForeignKey(User,on_delete = models.CASCADE,null=True,blank=True)  
     fechaBaja = models.DateTimeField(auto_now=False, null=True,blank=True,default=None)
     fechaAlta = models.DateTimeField(auto_now=False, null=True,blank=True, default=None)
 
     def __str__(self):
-        return self.comentario
+        return self.cuerpocomentario
 
 class MotivoDenuncia(models.Model):
     motivo = models.TextField(null=True,blank=False)
