@@ -13,16 +13,17 @@
 		</form>
 		<br>
 	    {% for post in posts %}
-	        <div class="post" style="margin-top: 70px">
-	        	<div class="col-md-12 col-md-offset-1" style="margin-left: -100px" >
-					<div class="panel panel-primary" style="margin-top:-25px"  >
-						<!-- Mostraremos solo el titulos de la publicacion -->			            
-			           <h4 style="margin-left:20px" ><a href="{% url 'post_detail' pk=post.pk %}" >{{ post.title }}</a></h4>
-			           <p style="margin-left: 700px">{{ post.published_date }}</p>
-			           <p style="margin-left: 700px">Comentarios:</p>
-			        </div>
-			    </div>
-	        </div> 
+	    	{% if post.title %}
+		        <div class="post" style="margin-top: 70px">
+		        	<div class="col-md-12 col-md-offset-1" style="margin-left: -100px" >
+						<div class="panel panel-primary" style="margin-top:-25px"  >
+							<!-- Mostraremos solo el titulos de la publicacion -->			            
+				           <h4 style="margin-left:20px" ><a href="{% url 'post_detail' pk=post.pk %}" >{{ post.title }}</a></h4>
+				           <p style="margin-left: 700px">{{ post.published_date }}</p>
+				        </div>
+				    </div>
+		        </div> 
+		    {% endif %}
 	    {% endfor %}
 	{% endblock %}
 	

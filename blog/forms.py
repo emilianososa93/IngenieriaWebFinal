@@ -2,12 +2,14 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 
-from .models import Post
+from .models import Post, Comentario
 
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ('title', 'text')
+        fields = ('title', 'text','created_date','published_date')
+		
+
 
 
 class UserForm(forms.ModelForm):
@@ -16,6 +18,7 @@ class UserForm(forms.ModelForm):
 	class Meta:
 		model = User
 		fields = ['username', 'password']
+
 
 class RegisterForm(forms.ModelForm):
 	username = forms.CharField(widget=forms.TextInput)
@@ -27,6 +30,12 @@ class RegisterForm(forms.ModelForm):
 	class Meta:
 		model = User
 		fields = ['username', 'email', 'password1', 'password2','nombre','apellido']
+
+
+class ComentariosForm(forms.ModelForm):
+	class Meta:
+		model	= Comentario
+		fields = ['cuerpocomentario']	
 
 
 

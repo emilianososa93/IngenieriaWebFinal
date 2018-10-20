@@ -38,6 +38,23 @@ def post_new(request):
         return render(request, 'blog/post_edit.html', {'form': form})
 
 @login_required
+def comentarPublicacion(request):
+    if request.method == 'POST':
+        idpublicacion = request.POST.get('idpublicacion')
+        contenido = request.POST.get('cuerpocomentario')
+        comentario = Comentario()
+        publicacion = Post.objects.get(idpublicacion = idpublicacion)
+        comentario.idpublicacion = publicacion
+        comentario.idusuario = request.user
+        comentario.cuerpocomentario = contenido
+        comentario.save()
+    post = Post.objects.all().order_by('-fechaAlta')
+    return render(request, 'blog/post_detail.html', {'post': post})  
+
+
+
+
+@login_required
 def post_edit(request, pk):
         post = get_object_or_404(Post, pk=pk)
         if request.method == "POST":
@@ -53,7 +70,6 @@ def post_edit(request, pk):
 
 
 def post_login(request):
-
     url_next = request.GET.get('next', None) 
     if request.method == "POST":
         form = UserForm(request.POST)

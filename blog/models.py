@@ -5,7 +5,6 @@ from django.contrib.auth.models import User
 import os
 
 class Post(models.Model):
-    idpublicion = models.ForeignKey(User,on_delete = models.CASCADE, null=True,blank=True, default='')
     idseccion = models.TextField()
     title = models.CharField(max_length=200)
     text = models.TextField()

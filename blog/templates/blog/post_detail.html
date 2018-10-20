@@ -1,26 +1,72 @@
 {% extends 'blog/base.html' %}
 
 {% block content %}
+
     <div  class="post">
+        <!-- ingreso fecha  -->
         {% if post.published_date %}
-            <div style="margin-left: 870px" class="date">
-                {{ post.published_date }}
+            <div style="margin-left: 700px;font-size: 16px;color: black" class="date">
+                <b>Fecha de publicación:{{ post.published_date }}</b>
             </div>
         {% endif %}
-        <ul>
-            <div style="margin-left: 940px" class="form-group" >
-                <a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
-            </div>
-            <div class="col-md-10 col-md-offset-1" style="margin-left: 20px">
-            <p >{{ post.text|linebreaksbr }}</p>
-        </div>
-        </ul>        
-        <div class="col-md-10 col-md-offset-1" style="margin-left: -150px">
-            <form method="get" action="/post/">
-            <div class="post"  style="margin-top: 70px">
-                <div class="col-md-3 col-md-offset-1" style="margin-left: 20px">
-                    <button class="btn btn-primary btn-block" name="nuevapubliacion" >Volver</button>
+            <ul>
+                <!-- ingreso titulo publicacion  -->
+                <div class="col-md-10 col-md-offset-1" style="font-size: 26px" align="center">
+                    <p >{{ post.title|linebreaksbr }}</p>
                 </div>
-            </div>
-        </form>
+                <br>
+                <br>
+                <br>
+                <!-- ingreso cuerpo publicacion  -->
+                <div class="col-md-10 col-md-offset-1" style="margin-left: 20px;font-size: 16px">
+                    <p >{{ post.text|linebreaksbr }}</p>
+                </div>
+                <br>
+                <div class="col-md-10 col-md-offset-1" style="text-align: center;font-size: 16px;color: black">
+                    <br>
+                    <br>
+                    <br>
+                    <b>Cometarios</b>
+                </div>
+                <div>
+                {% block content1 %}
+                    <form method="POST" class="post-form" >
+                        {% csrf_token %}
+                        {% for coments in comentario %}
+                            <div class="col-md-12 col-md-offset-1" style="margin-left: -100px" >
+                                <div class="panel panel-primary" style="margin-top:-25px"  >
+                                    <!-- Mostraremos solo el usuario y el comentario -->             
+                                   <p style="margin-left: 20px">{{ coments.cuerpocomentario }}</p>
+                                </div>
+                            </div>
+                        {% endfor %} 
+                        <div class="col-md-10 col-md-offset-1" style="margin-left: 20px;font-size: 16px; margin-top: 100px">
+                            <b>Comentar</b>
+                            <br>
+                            <textarea type="text" name="comentar" style="width: 100%; height: 20%"></textarea>
+                            </div>     
+                        <div class="comentarios" style="margin-top: 70px">  
+                            <div class="col-md-2 col-md-offset-1" style="left: 60%" >
+                                <br>
+                                <button class="btn btn-primary btn-block" type="submit"  name="comentar" >Comentar</button>
+                            </div>
+                        </div>
+                    </form>                    
+                    <!-- ingreso comentario publicacion  -->
+                                      
+                {% endblock %}
+                </div>
+            </ul> 
+            
+
+            <!-- boton publicacion  -->           
+                <div class="col-md-10 col-md-offset-1" style="">
+                    <form method="get" action="/post/">
+                        <div class="post"  style="margin-top: 10px">
+                            <div class="col-md-3 col-md-offset-1" style="margin-left: -160px">
+                                <button class="btn btn-primary btn-block" name="nuevapubliacion" >Volver</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
 {% endblock %}

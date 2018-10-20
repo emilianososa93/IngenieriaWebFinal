@@ -4,8 +4,14 @@ from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 from django.contrib.auth.models import User
 import os
 
+
+class Seccion(models.Model):
+    seccion = models.TextField(null=True,blank=False)   
+
+    def __str__(self):
+        return self.seccion 
+
 class Post(models.Model):
-    idseccion = models.TextField()
     title = models.CharField(max_length=200)
     text = models.TextField()
     created_date = models.DateTimeField(default=timezone.now)
